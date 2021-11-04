@@ -197,12 +197,12 @@ PipoSynth02AudioProcessor::createParameters() {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
     // Oscillator's parameters
     params.push_back(std::make_unique<juce::AudioParameterChoice>("osc1Type", "Osc1 Type", juce::StringArray("Sine", "Saw", "Square","Triangle","Noise"), 0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("osc1Gain", "Osc1 Gain", juce::NormalisableRange<float>(0.f,1.f), 0.8f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("osc1Gain", "Osc1 Gain", juce::NormalisableRange<float>(0.f, 1.f, 0.01f), 0.8f));
     // Envelope's parameters
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("attack", "Attack", juce::NormalisableRange<float>(0.1f, 5000.f), 0.1f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("decay", "Decay", juce::NormalisableRange<float>(0.1f, 5000.f), 1.f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("sustain", "Sustain", juce::NormalisableRange<float>(0.f, 1.f), 0.8f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("release", "Release", juce::NormalisableRange<float>(0.3f, 5000.f), 0.3f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("attack", "Attack", juce::NormalisableRange<float>(0.1f, 5000.f, 0.1f), 0.1f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("decay", "Decay", juce::NormalisableRange<float>(0.1f, 5000.f, 0.1f), 1.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("sustain", "Sustain", juce::NormalisableRange<float>(0.f, 1.f, 0.1f), 0.8f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("release", "Release", juce::NormalisableRange<float>(0.5f, 5000.f, 0.1f), 0.5f));
     
     return { params.begin(), params.end() };
 }

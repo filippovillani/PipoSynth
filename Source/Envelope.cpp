@@ -18,29 +18,33 @@ Envelope::Envelope(PipoSynth02AudioProcessor& p) : audioProcessor(p)
     attackSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     attackSlider.setRange(0.1f, 5000.f);
     attackSlider.setValue(0.1f);
-    attackSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 60.0, 20.0);
-    attackSlider.setTextValueSuffix(" Hz");
+    attackSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60.0, 20.0);
+    //attackSlider.setNumDecimalPlacesToDisplay(1);
+    //attackSlider.setTextValueSuffix(" ms");
     addAndMakeVisible(&attackSlider);
 
     releaseSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
-    releaseSlider.setRange(0.3f, 5000.f);
-    releaseSlider.setValue(0.3f);
-    releaseSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 60.0, 20.0);
-    releaseSlider.setTextValueSuffix(" Hz");
+    releaseSlider.setRange(0.5f, 5000.f);
+    releaseSlider.setValue(0.5f);
+    releaseSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60.0, 20.0);
+    //releaseSlider.setNumDecimalPlacesToDisplay(1);
+    //releaseSlider.setTextValueSuffix(" ms");
     addAndMakeVisible(&releaseSlider);
 
     sustainSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     sustainSlider.setRange(0.0f, 1.0f);
     sustainSlider.setValue(0.8f);
-    sustainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 60.0, 20.0);
-    sustainSlider.setTextValueSuffix(" Hz");
+    sustainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60.0, 20.0);
+    //sustainSlider.setNumDecimalPlacesToDisplay(1);
+    //sustainSlider.setTextValueSuffix(" ms");
     addAndMakeVisible(&sustainSlider);
 
     decaySlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     decaySlider.setRange(0.1f, 5000.f);
     decaySlider.setValue(1.f);
-    decaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 60.0, 20.0);
-    decaySlider.setTextValueSuffix(" Hz");
+    decaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60.0, 20.0);
+    //decaySlider.setNumDecimalPlacesToDisplay(1);
+    //decaySlider.setTextValueSuffix(" ms");
     addAndMakeVisible(&decaySlider);
 
     attackAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "attack", attackSlider);
