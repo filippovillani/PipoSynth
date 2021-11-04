@@ -51,22 +51,22 @@ public:
 
         switch (osc2Wave) {
         case 0:
-            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx]);
+            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx+2]);
             break;
         case 1:
-            sample2 = osc2.saw(frequency * octShiftFreq[octIdx]);
+            sample2 = osc2.saw(frequency * octShiftFreq[octIdx+2]);
             break;
         case 2:
-            sample2 = osc2.square(frequency * octShiftFreq[octIdx]);
+            sample2 = osc2.square(frequency * octShiftFreq[octIdx+2]);
             break;
         case 3:
-            sample2 = osc2.triangle(frequency * octShiftFreq[octIdx]);
+            sample2 = osc2.triangle(frequency * octShiftFreq[octIdx+2]);
             break;
         case 4:
             sample2 = osc2.noise();
             break;
         default:
-            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx]);
+            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx+2]);
             break;
         }
         return (sample1 * osc1level + sample2 * osc2level) / 2;
@@ -130,5 +130,5 @@ private:
     //juce::dsp::StateVariableTPTFilter<double> filter;
     maxiOsc osc1, osc2;
     maxiEnv env1;
-
+    
 };
