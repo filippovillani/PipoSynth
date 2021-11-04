@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "Oscillator.h"
+#include "Envelope.h"
 
 //==============================================================================
 /**
@@ -29,6 +30,7 @@ private:
     PipoSynth02AudioProcessor& audioProcessor;
 
     Oscillator oscGUI;
+    Envelope envGUI;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PipoSynth02AudioProcessorEditor)
 };

@@ -26,7 +26,6 @@ public:
         osc1level = *level1;
     }
     // ===========================================
-
     double setOscType() {
         switch (osc1Wave) {
         case 0:
@@ -51,19 +50,30 @@ public:
         return sample1 * osc1level;
     }
     // ===========================================
+    void getEnvelopeParams(std::atomic<float>* attack, std::atomic<float>* decay, std::atomic<float>* sustain, std::atomic<float>* release) {
+        env1.setAttack(*attack);
+        env1.setDecay(*decay);
+        env1.setSustain(*sustain);
+        env1.setRelease(*release);
+    }
+    // ===========================================
+    double setEnvelope() {
+        return env1.adsr(setOscType(), env1.trigger);
+    }
+    // ===========================================
     //double setFilter() {
 
     //    // return filter.setType(::lopass) // do this for each case
     //}
     // ===========================================
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override {
-        // env1.trigger = 1;
+        env1.trigger = 1;
         level = velocity;
         frequency = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
     }
     // ===========================================
     void stopNote(float velocity, bool allowTailOff) {
-        // env1.trigger = 0;
+        env1.trigger = 0;
         allowTailOff = true;
         if (velocity == 0) {
             SynthesiserVoice::clearCurrentNote();
@@ -81,7 +91,7 @@ public:
     void renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples) override {
         for (int sample = 0; sample < numSamples; ++sample) {
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel) {
-                outputBuffer.addSample(channel, startSample, setOscType());
+                outputBuffer.addSample(channel, startSample, setEnvelope());
             }
             ++startSample;
         }
@@ -94,5 +104,6 @@ private:
     
     //juce::dsp::StateVariableTPTFilter<double> filter;
     maxiOsc osc1;
+    maxiEnv env1;
 
 };
