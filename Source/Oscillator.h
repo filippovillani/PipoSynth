@@ -26,11 +26,11 @@ public:
     void resized() override;
 
 private:
-    juce::ComboBox osc1Menu;
-    juce::Slider osc1GainSlider;
+    juce::ComboBox osc1Menu, osc2Menu;
+    juce::Slider osc1GainSlider, osc2GainSlider;
 
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> osc1Choice;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> osc1GainAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> osc1Choice, osc2Choice;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> osc1GainAttachment, osc2GainAttachment;
 
     PipoSynth02AudioProcessor& audioProcessor;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Oscillator)

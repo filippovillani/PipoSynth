@@ -13,17 +13,20 @@
 #include "SynthSound.h"
 #include "maximilian.h"
 
-class SynthVoice : public juce::SynthesiserVoice // SynthVoice is a derived class. You won't use virtual funcs and you should 
-{                                                // put override to virtual functions. Use virtual in base class
+class SynthVoice : public juce::SynthesiserVoice 
+{                                                
 public: 
     // ===========================================
     bool canPlaySound(juce::SynthesiserSound* sound) override {
         return dynamic_cast<SynthSound*> (sound) != nullptr;
     }
     // ===========================================
-    void getOscParams(std::atomic<float>* selection1, std::atomic<float>* level1) {
+    void getOscParams(std::atomic<float>* selection1, std::atomic<float>* level1,
+        std::atomic<float>* selection2, std::atomic<float>* level2) {
         osc1Wave = *selection1;
         osc1level = *level1;
+        osc2Wave = *selection2;
+        osc2level = *level2;
     }
     // ===========================================
     double setOscType() {
@@ -40,14 +43,32 @@ public:
         case 3:
             sample1 = osc1.triangle(frequency);
             break;
-        case 4:
-            sample1 = osc1.noise();
-            break;
         default:
             sample1 = osc1.sinewave(frequency);
             break;
         }
-        return sample1 * osc1level;
+
+        switch (osc2Wave) {
+        case 0:
+            sample2 = osc2.sinewave(frequency);
+            break;
+        case 1:
+            sample2 = osc2.saw(frequency);
+            break;
+        case 2:
+            sample2 = osc2.square(frequency);
+            break;
+        case 3:
+            sample2 = osc2.triangle(frequency);
+            break;
+        case 4:
+            sample2 = osc2.noise();
+            break;
+        default:
+            sample2 = osc2.sinewave(frequency);
+            break;
+        }
+        return (sample1 * osc1level + sample2 * osc2level) / 2;
     }
     // ===========================================
     void getEnvelopeParams(std::atomic<float>* attack, std::atomic<float>* decay, std::atomic<float>* sustain, std::atomic<float>* release) {
@@ -97,13 +118,13 @@ public:
         }
     }
 private:
-    double frequency, level;   // used in setOscType(), defined in startNote()
-    double sample1;     // used in setOscType()
-    int osc1Wave;       // used in getOscParameters()
-    double osc1level;   // used in getOscParameters()
+    double frequency, level;        // used in setOscType(), defined in startNote()
+    double sample1, sample2;        // used in setOscType()
+    int osc1Wave, osc2Wave;         // used in getOscParameters()
+    double osc1level, osc2level;    // used in getOscParameters()
     
     //juce::dsp::StateVariableTPTFilter<double> filter;
-    maxiOsc osc1;
+    maxiOsc osc1, osc2;
     maxiEnv env1;
 
 };
