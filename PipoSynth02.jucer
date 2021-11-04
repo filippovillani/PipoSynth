@@ -6,6 +6,25 @@
               cppLanguageStandard="17">
   <MAINGROUP id="bxVNrD" name="PipoSynth02">
     <GROUP id="{69EEAEAC-445E-941E-AD4F-3B47DCCBEFCE}" name="Source">
+      <GROUP id="{7E25030E-DA01-678D-3912-250553B727DC}" name="Maximilian">
+        <FILE id="QuVh8Y" name="fft.cpp" compile="1" resource="0" file="../../C++Libraries/Maximilian/fft.cpp"/>
+        <FILE id="PIQzGj" name="fft.h" compile="0" resource="0" file="../../C++Libraries/Maximilian/fft.h"/>
+        <FILE id="w00vMV" name="maxiAtoms.cpp" compile="1" resource="0" file="../../C++Libraries/Maximilian/maxiAtoms.cpp"/>
+        <FILE id="jPlqFO" name="maxiAtoms.h" compile="0" resource="0" file="../../C++Libraries/Maximilian/maxiAtoms.h"/>
+        <FILE id="FTNlay" name="maxiBark.cpp" compile="1" resource="0" file="../../C++Libraries/Maximilian/maxiBark.cpp"/>
+        <FILE id="VDUose" name="maxiBark.h" compile="0" resource="0" file="../../C++Libraries/Maximilian/maxiBark.h"/>
+        <FILE id="SyH3xM" name="maxiFFT.cpp" compile="1" resource="0" file="../../C++Libraries/Maximilian/maxiFFT.cpp"/>
+        <FILE id="CEpfZC" name="maxiFFT.h" compile="0" resource="0" file="../../C++Libraries/Maximilian/maxiFFT.h"/>
+        <FILE id="sMLr65" name="maxiGrains.cpp" compile="1" resource="0" file="../../C++Libraries/Maximilian/maxiGrains.cpp"/>
+        <FILE id="XKkxqQ" name="maxiGrains.h" compile="0" resource="0" file="../../C++Libraries/Maximilian/maxiGrains.h"/>
+        <FILE id="eGPAn3" name="maxiMFCC.cpp" compile="1" resource="0" file="../../C++Libraries/Maximilian/maxiMFCC.cpp"/>
+        <FILE id="ZB396P" name="maxiMFCC.h" compile="0" resource="0" file="../../C++Libraries/Maximilian/maxiMFCC.h"/>
+        <FILE id="R4uExs" name="maximilian.cpp" compile="1" resource="0" file="../../C++Libraries/Maximilian/maximilian.cpp"/>
+        <FILE id="BwN6WC" name="maximilian.h" compile="0" resource="0" file="../../C++Libraries/Maximilian/maximilian.h"/>
+        <FILE id="DHZCTr" name="sineTable.h" compile="0" resource="0" file="../../C++Libraries/Maximilian/sineTable.h"/>
+        <FILE id="zDD6a6" name="stb_vorbis.c" compile="1" resource="0" file="../../C++Libraries/Maximilian/stb_vorbis.c"/>
+        <FILE id="K72w0c" name="stb_vorbis.h" compile="0" resource="0" file="../../C++Libraries/Maximilian/stb_vorbis.h"/>
+      </GROUP>
       <FILE id="dwuksD" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="FxBdLD" name="PluginProcessor.h" compile="0" resource="0"
@@ -13,13 +32,17 @@
       <FILE id="oFxETi" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="zVyIvZ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="Wu6UyE" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
+      <FILE id="UupCE3" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
+      <FILE id="sYf0aD" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
+      <FILE id="HT7zGS" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
     <VS2019 targetFolder="Builds/VisualStudio2019">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="PipoSynth02"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="PipoSynth02" headerPath="D:\C++Libraries\Maximilian"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="PipoSynth02"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

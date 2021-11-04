@@ -9,6 +9,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "SynthSound.h"
+#include "SynthVoice.h"
 
 //==============================================================================
 /**
@@ -18,7 +20,7 @@ class PipoSynth02AudioProcessor  : public juce::AudioProcessor
 public:
     //==============================================================================
     PipoSynth02AudioProcessor();
-    ~PipoSynth02AudioProcessor() override;
+    ~PipoSynth02AudioProcessor();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -53,7 +55,16 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    juce::AudioProcessorValueTreeState apvts;
+
 private:
+    juce::Synthesiser mySynth;
+    SynthVoice* myVoice;
+
+    int filterChoice;
+    double lastSampleRate;
+
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PipoSynth02AudioProcessor)
 };
