@@ -47,11 +47,19 @@ Oscillator::Oscillator(PipoSynth02AudioProcessor& p) :
     osc2GainSlider.setNumDecimalPlacesToDisplay(2);
     addAndMakeVisible(&osc2GainSlider);
 
+    octShiftSlider.setSliderStyle(juce::Slider::SliderStyle::IncDecButtons);
+    octShiftSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 38, 25);
+    octShiftSlider.setTextValueSuffix(" oct");
+    octShiftSlider.setRange(-2, 2, 1);
+    octShiftSlider.setValue(0);
+    addAndMakeVisible(&octShiftSlider);
+
     // Attachments
     osc1Choice = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "osc1Type", osc1Menu);
     osc1GainAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts,"osc1Gain", osc1GainSlider);
     osc2Choice = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "osc2Type", osc2Menu);
     osc2GainAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts,"osc2Gain", osc2GainSlider);
+    octShiftAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "oct2", octShiftSlider);
 }
 
 Oscillator::~Oscillator()
@@ -69,7 +77,7 @@ void Oscillator::paint (juce::Graphics& g)
     g.drawText("OSC1", 50, 32, 100, 20, juce::Justification::centredTop);
     g.drawText("OSC2", 50, 105, 100, 20, juce::Justification::centredTop);
 
-    juce::Rectangle <float> area(25, 25, 150, 150);
+    juce::Rectangle <float> area(25, 25, 175, 150);
 
     g.setColour(juce::Colours::yellow);
     g.drawRoundedRectangle(area, 20.0f, 2.0f);
@@ -78,7 +86,8 @@ void Oscillator::paint (juce::Graphics& g)
 void Oscillator::resized()
 {
     osc1Menu.setBounds(50, 48, 100, 22);
-    osc1GainSlider.setBounds(50, 78, 100, 20);
+    osc1GainSlider.setBounds(50, 75, 100, 20);
     osc2Menu.setBounds(50, 121, 100, 22);
-    osc2GainSlider.setBounds(50, 154, 100, 20);
+    osc2GainSlider.setBounds(50, 151, 100, 20);
+    octShiftSlider.setBounds(157, 125, 40, 30);
 }

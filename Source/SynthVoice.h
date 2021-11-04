@@ -22,11 +22,12 @@ public:
     }
     // ===========================================
     void getOscParams(std::atomic<float>* selection1, std::atomic<float>* level1,
-        std::atomic<float>* selection2, std::atomic<float>* level2) {
+        std::atomic<float>* selection2, std::atomic<float>* level2, std::atomic<float>* oct2) {
         osc1Wave = *selection1;
         osc1level = *level1;
         osc2Wave = *selection2;
         osc2level = *level2;
+        octIdx = *oct2;
     }
     // ===========================================
     double setOscType() {
@@ -50,22 +51,22 @@ public:
 
         switch (osc2Wave) {
         case 0:
-            sample2 = osc2.sinewave(frequency);
+            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx]);
             break;
         case 1:
-            sample2 = osc2.saw(frequency);
+            sample2 = osc2.saw(frequency * octShiftFreq[octIdx]);
             break;
         case 2:
-            sample2 = osc2.square(frequency);
+            sample2 = osc2.square(frequency * octShiftFreq[octIdx]);
             break;
         case 3:
-            sample2 = osc2.triangle(frequency);
+            sample2 = osc2.triangle(frequency * octShiftFreq[octIdx]);
             break;
         case 4:
             sample2 = osc2.noise();
             break;
         default:
-            sample2 = osc2.sinewave(frequency);
+            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx]);
             break;
         }
         return (sample1 * osc1level + sample2 * osc2level) / 2;
@@ -122,6 +123,9 @@ private:
     double sample1, sample2;        // used in setOscType()
     int osc1Wave, osc2Wave;         // used in getOscParameters()
     double osc1level, osc2level;    // used in getOscParameters()
+    int octIdx;                     // used in getOscParameters()
+
+    float octShiftFreq[5] = { 0.25, 0.5, 1, 2, 4 };
     
     //juce::dsp::StateVariableTPTFilter<double> filter;
     maxiOsc osc1, osc2;
