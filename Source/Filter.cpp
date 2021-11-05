@@ -2,7 +2,7 @@
   ==============================================================================
 
     Filter.cpp
-    Created: 5 Nov 2021 2:21:34am
+    Created: 4 Nov 2021 10:03:52pm
     Author:  User
 
   ==============================================================================
@@ -12,40 +12,69 @@
 #include "Filter.h"
 
 //==============================================================================
-Filter::Filter()
+Filter::Filter(PipoSynth02AudioProcessor& p) : audioProcessor(p)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
+    setSize(200, 200);
 
+    filterMenu.addItem("LPF", 1);
+    filterMenu.addItem("BPF", 2);
+    filterMenu.addItem("HPF", 3);
+    filterMenu.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(&filterMenu);
+
+    cutoffSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    cutoffSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 30, 20);
+    cutoffSlider.setRange(80.f, 20000.f);
+    cutoffSlider.setValue(80.f);
+    cutoffSlider.setTextValueSuffix(" Hz");
+    cutoffSlider.setNumDecimalPlacesToDisplay(0);
+    addAndMakeVisible(&cutoffSlider);
+
+    resonanceSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    resonanceSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 30, 20);
+    resonanceSlider.setRange(0.1f, 10.f);
+    resonanceSlider.setValue(0.707f);
+    resonanceSlider.setNumDecimalPlacesToDisplay(2);
+    addAndMakeVisible(&resonanceSlider);
+
+    bypassButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
+    bypassButton.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
+    bypassButton.setClickingTogglesState(true);
+    addAndMakeVisible(&bypassButton);
+
+    filterChoice = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "filterType", filterMenu);
+    cutoffAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "cutoff", cutoffSlider);
+    resonanceAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "resonance", resonanceSlider);
+    bypassAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, "filterBypass", bypassButton);
+
+    cutoffSlider.setSkewFactorFromMidPoint(1000.f);
 }
 
 Filter::~Filter()
 {
 }
 
-void Filter::paint (juce::Graphics& g)
+void Filter::paint(juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+    juce::Rectangle<int> titleArea(0, 10, getWidth(), 20);
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+    g.fillAll(juce::Colours::black);
+    g.setColour(juce::Colours::white);
+    g.drawText("Filter", titleArea, juce::Justification::centredTop);
 
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
+    juce::Rectangle <float> area(25, 25, 150, 150);
 
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("Filter", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+    g.setColour(juce::Colours::yellow);
+    g.drawRoundedRectangle(area, 20.0f, 2.0f);
 }
+
 
 void Filter::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+    juce::Rectangle<int> area = getLocalBounds().reduced(40);
 
+    filterMenu.setBounds(area.removeFromTop(20));
+    cutoffSlider.setBounds(30, 100, 70, 70);
+    resonanceSlider.setBounds(100, 100, 70, 70);
+    bypassButton.setBounds(70, 20, 20, 20);
 }

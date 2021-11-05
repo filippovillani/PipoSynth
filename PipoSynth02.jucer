@@ -38,8 +38,8 @@
       <FILE id="HT7zGS" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="hFeCdp" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
       <FILE id="TbOGvi" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
-      <FILE id="SNE2a9" name="Filter.cpp" compile="1" resource="0" file="Source/Filter.cpp"/>
-      <FILE id="JORBrH" name="Filter.h" compile="0" resource="0" file="Source/Filter.h"/>
+      <FILE id="Yx7NlQ" name="Filter.cpp" compile="1" resource="0" file="Source/Filter.cpp"/>
+      <FILE id="kw9qXa" name="Filter.h" compile="0" resource="0" file="Source/Filter.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

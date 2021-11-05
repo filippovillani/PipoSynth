@@ -130,10 +130,10 @@ public:
         for (int sample = 0; sample < numSamples; ++sample) {
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel) {
                 if (bypass) {
-                    outputBuffer.addSample(channel, startSample, setEnvelope());
+                    outputBuffer.addSample(channel, startSample, setFilter());
                 }
                 else {
-                    outputBuffer.addSample(channel, startSample, setFilter());
+                    outputBuffer.addSample(channel, startSample, setEnvelope());
                 }
             }
             ++startSample;
