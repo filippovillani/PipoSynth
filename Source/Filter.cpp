@@ -25,6 +25,7 @@ Filter::Filter(PipoSynth02AudioProcessor& p) : audioProcessor(p)
     cutoffSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     cutoffSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
     cutoffSlider.setRange(80.f, 20000.f);
+    cutoffSlider.setSkewFactor(0.4f);
     cutoffSlider.setValue(80.f);
     cutoffSlider.setTextValueSuffix(" Hz");
     cutoffSlider.setNumDecimalPlacesToDisplay(0);
@@ -55,7 +56,7 @@ Filter::Filter(PipoSynth02AudioProcessor& p) : audioProcessor(p)
     resonanceAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "resonance", resonanceSlider);
     bypassAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, "filterBypass", bypassButton);
 
-    cutoffSlider.setSkewFactorFromMidPoint(1000.f);
+
 }
 
 Filter::~Filter()
