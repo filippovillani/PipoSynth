@@ -23,7 +23,7 @@ Filter::Filter(PipoSynth02AudioProcessor& p) : audioProcessor(p)
     addAndMakeVisible(&filterMenu);
 
     cutoffSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    cutoffSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 30, 20);
+    cutoffSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 55, 20);
     cutoffSlider.setRange(80.f, 20000.f);
     cutoffSlider.setValue(80.f);
     cutoffSlider.setTextValueSuffix(" Hz");
@@ -35,7 +35,7 @@ Filter::Filter(PipoSynth02AudioProcessor& p) : audioProcessor(p)
     addAndMakeVisible(&cutoffLabel);
 
     resonanceSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    resonanceSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 30, 20);
+    resonanceSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
     resonanceSlider.setRange(0.1f, 10.f);
     resonanceSlider.setValue(0.707f);
     resonanceSlider.setNumDecimalPlacesToDisplay(2);

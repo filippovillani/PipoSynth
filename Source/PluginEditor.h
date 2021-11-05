@@ -13,6 +13,7 @@
 #include "Oscillator.h"
 #include "Envelope.h"
 #include "Filter.h"
+#include "OtherStuff.h"
 
 //==============================================================================
 /**
@@ -33,6 +34,7 @@ private:
     Oscillator oscGUI;
     Envelope envGUI;
     Filter filterGUI;
+    OtherStuff mainGUI;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PipoSynth02AudioProcessorEditor)
 };

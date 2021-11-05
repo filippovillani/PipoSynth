@@ -161,6 +161,9 @@ void PipoSynth02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
                 apvts.getRawParameterValue("cutoff"),
                 apvts.getRawParameterValue("resonance"),
                 apvts.getRawParameterValue("filterBypass"));
+
+            myVoice->getOtherParams(
+                apvts.getRawParameterValue("masterGain"));
         }
     }
 
@@ -217,9 +220,12 @@ PipoSynth02AudioProcessor::createParameters() {
     params.push_back(std::make_unique<juce::AudioParameterFloat>("release", "Release", juce::NormalisableRange<float>(0.5f, 5000.f, 0.1f), 0.5f));
     // Filter's parameters
     params.push_back(std::make_unique<juce::AudioParameterChoice>("filterType", "Filter Type", juce::StringArray("LPF", "BPF", "HPF"), 0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("cutoff", "CutOff", juce::NormalisableRange<float>(80.f, 20000.f, 0.1f), 80.f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("cutoff", "CutOff", juce::NormalisableRange<float>(80.f, 20000.f, 1.f), 80.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("resonance", "Q", juce::NormalisableRange<float>(0.1f, 10.f, 0.1f), 0.707f));
-    params.push_back(std::make_unique<juce::AudioParameterBool>("filterBypass", "Filter Bypass", true));
+    params.push_back(std::make_unique<juce::AudioParameterBool>("filterBypass", "Filter Bypass", false));
+    // Other parameters
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("masterGain", "Master Gain", juce::NormalisableRange<float>(-60.f, 12.f, 0.1f), -6.f));
+
 
     return { params.begin(), params.end() };
 }

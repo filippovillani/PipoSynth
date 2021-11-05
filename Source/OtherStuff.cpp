@@ -12,10 +12,19 @@
 #include "OtherStuff.h"
 
 //==============================================================================
-OtherStuff::OtherStuff()
+OtherStuff::OtherStuff(PipoSynth02AudioProcessor& p) :
+    audioProcessor(p)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
+    setSize(100, 200);
+    masterSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    masterSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    masterSlider.setRange(-60.f, 12.f);
+    masterSlider.setValue(-6.f);
+    masterSlider.setTextValueSuffix(" dB");
+    masterSlider.setNumDecimalPlacesToDisplay(1);
+    addAndMakeVisible(&masterSlider);
+
+    masterAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "masterGain", masterSlider);
 
 }
 
@@ -25,27 +34,24 @@ OtherStuff::~OtherStuff()
 
 void OtherStuff::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+    juce::Rectangle<int> titleArea(38, 10, 50, 20);
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+    g.fillAll(juce::Colours::black);
+    g.setColour(juce::Colours::white);
+    g.drawText("Master", titleArea, juce::Justification::centredTop);
 
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
+    g.drawText("Gain", 35, 40, 55, 20, juce::Justification::centredTop);
 
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("OtherStuff", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+    g.setColour(juce::Colours::yellow);
+    g.drawRoundedRectangle(25, 25, 75, 150, 20.f, 2.f);
 }
 
 void OtherStuff::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+    juce::Rectangle<int> area = getLocalBounds().reduced(40);
 
+    int sliderWidth = 48;
+    int sliderHeight = 175;
+
+    masterSlider.setBounds(area.removeFromLeft(sliderWidth).removeFromTop(sliderHeight).withTrimmedTop(10));
 }

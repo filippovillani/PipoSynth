@@ -11,12 +11,13 @@
 
 //==============================================================================
 PipoSynth02AudioProcessorEditor::PipoSynth02AudioProcessorEditor (PipoSynth02AudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p), oscGUI(p), envGUI(p), filterGUI(p)
+    : AudioProcessorEditor (&p), audioProcessor (p), oscGUI(p), envGUI(p), filterGUI(p), mainGUI(p)
 {
-    setSize (600, 200);
+    setSize (800, 200);
     addAndMakeVisible(&oscGUI);
     addAndMakeVisible(&envGUI);
     addAndMakeVisible(&filterGUI);
+    addAndMakeVisible(&mainGUI);
 }
 
 PipoSynth02AudioProcessorEditor::~PipoSynth02AudioProcessorEditor()
@@ -39,4 +40,5 @@ void PipoSynth02AudioProcessorEditor::resized()
     oscGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
     envGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
     filterGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
+    mainGUI.setBounds(area.removeFromLeft(componentWidth).removeFromTop(componentHeight));
 }

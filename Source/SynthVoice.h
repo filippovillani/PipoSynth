@@ -13,9 +13,9 @@
 #include "SynthSound.h"
 #include "maximilian.h"
 
-class SynthVoice : public juce::SynthesiserVoice 
-{                                                
-public: 
+class SynthVoice : public juce::SynthesiserVoice
+{
+public:
     // ===========================================
     bool canPlaySound(juce::SynthesiserSound* sound) override {
         return dynamic_cast<SynthSound*> (sound) != nullptr;
@@ -51,22 +51,22 @@ public:
 
         switch (osc2Wave) {
         case 0:
-            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx+2]);
+            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx + 2]);
             break;
         case 1:
-            sample2 = osc2.saw(frequency * octShiftFreq[octIdx+2]);
+            sample2 = osc2.saw(frequency * octShiftFreq[octIdx + 2]);
             break;
         case 2:
-            sample2 = osc2.square(frequency * octShiftFreq[octIdx+2]);
+            sample2 = osc2.square(frequency * octShiftFreq[octIdx + 2]);
             break;
         case 3:
-            sample2 = osc2.triangle(frequency * octShiftFreq[octIdx+2]);
+            sample2 = osc2.triangle(frequency * octShiftFreq[octIdx + 2]);
             break;
         case 4:
             sample2 = osc2.noise();
             break;
         default:
-            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx+2]);
+            sample2 = osc2.sinewave(frequency * octShiftFreq[octIdx + 2]);
             break;
         }
         return (sample1 * osc1level + sample2 * osc2level) / 2;
@@ -91,7 +91,7 @@ public:
     }
     // ===========================================
     double setFilter() {
-        if (filterTypeParam == 0){
+        if (filterTypeParam == 0) {
             return filter.lores(setEnvelope(), cutoffParam, resonanceParam);
         }
 
@@ -103,6 +103,11 @@ public:
             return filter.hires(setEnvelope(), cutoffParam, resonanceParam);
         }
     }
+    // ===========================================
+    void getOtherParams(std::atomic<float>* gain) {
+        masterGain = *gain;
+    }
+
     // ===========================================
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override {
         env1.trigger = 1;
@@ -130,10 +135,10 @@ public:
         for (int sample = 0; sample < numSamples; ++sample) {
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel) {
                 if (bypass) {
-                    outputBuffer.addSample(channel, startSample, setFilter());
+                    outputBuffer.addSample(channel, startSample, setFilter() * juce::Decibels::decibelsToGain<float>(masterGain));
                 }
                 else {
-                    outputBuffer.addSample(channel, startSample, setEnvelope());
+                    outputBuffer.addSample(channel, startSample, setEnvelope() * juce::Decibels::decibelsToGain<float>(masterGain));
                 }
             }
             ++startSample;
@@ -151,7 +156,8 @@ private:
     float cutoffParam, resonanceParam;  // used in getFilterParams()
     bool bypass;                        // used in getFilterParams()
     
-    //juce::dsp::StateVariableTPTFilter<double> filter;
+    float masterGain;           
+
     maxiOsc osc1, osc2;
     maxiEnv env1;
     maxiFilter filter;
