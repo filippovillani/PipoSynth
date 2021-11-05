@@ -155,6 +155,12 @@ void PipoSynth02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
                 apvts.getRawParameterValue("decay"),
                 apvts.getRawParameterValue("sustain"),
                 apvts.getRawParameterValue("release"));
+
+            myVoice->getFilterParams(
+                apvts.getRawParameterValue("filterType"),
+                apvts.getRawParameterValue("cutoff"),
+                apvts.getRawParameterValue("resonance"),
+                apvts.getRawParameterValue("filterBypass"));
         }
     }
 
@@ -209,6 +215,11 @@ PipoSynth02AudioProcessor::createParameters() {
     params.push_back(std::make_unique<juce::AudioParameterFloat>("decay", "Decay", juce::NormalisableRange<float>(0.1f, 5000.f, 0.1f), 1.f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("sustain", "Sustain", juce::NormalisableRange<float>(0.f, 1.f, 0.1f), 0.8f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("release", "Release", juce::NormalisableRange<float>(0.5f, 5000.f, 0.1f), 0.5f));
-    
+    // Filter's parameters
+    params.push_back(std::make_unique<juce::AudioParameterChoice>("filterType", "Filter Type", juce::StringArray("LPF", "BPF", "HPF"), 0));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("cutoff", "CutOff", juce::NormalisableRange<float>(0.1f, 5000.f, 0.1f), 0.1f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("resonance", "Q", juce::NormalisableRange<float>(0.1f, 10.f, 0.1f), 0.707f));
+    params.push_back(std::make_unique<juce::AudioParameterBool>("filterBypass", "Filter Bypass", true));
+
     return { params.begin(), params.end() };
 }

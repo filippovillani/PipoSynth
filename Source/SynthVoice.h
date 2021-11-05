@@ -82,11 +82,27 @@ public:
     double setEnvelope() {
         return env1.adsr(setOscType(), env1.trigger);
     }
+    // ==========================================
+    void getFilterParams(std::atomic<float>* filterType, std::atomic<float>* filterCutoff, std::atomic<float>* filterRes, std::atomic<float>* onoff) {
+        filterTypeParam = *filterType;
+        cutoffParam = *filterCutoff;
+        resonanceParam = *filterRes;
+        bypass = *onoff;
+    }
     // ===========================================
-    //double setFilter() {
+    double setFilter() {
+        if (filterTypeParam == 0){
+            return filter.lores(setEnvelope(), cutoffParam, resonanceParam);
+        }
 
-    //    // return filter.setType(::lopass) // do this for each case
-    //}
+        if (filterTypeParam == 1) {
+            return filter.bandpass(setEnvelope(), cutoffParam, resonanceParam);
+        }
+
+        if (filterTypeParam == 2) {
+            return filter.hires(setEnvelope(), cutoffParam, resonanceParam);
+        }
+    }
     // ===========================================
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override {
         env1.trigger = 1;
@@ -113,7 +129,12 @@ public:
     void renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples) override {
         for (int sample = 0; sample < numSamples; ++sample) {
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel) {
-                outputBuffer.addSample(channel, startSample, setEnvelope());
+                if (bypass) {
+                    outputBuffer.addSample(channel, startSample, setEnvelope());
+                }
+                else {
+                    outputBuffer.addSample(channel, startSample, setFilter());
+                }
             }
             ++startSample;
         }
@@ -121,14 +142,17 @@ public:
 private:
     double frequency, level;        // used in setOscType(), defined in startNote()
     double sample1, sample2;        // used in setOscType()
-    int osc1Wave, osc2Wave;         // used in getOscParameters()
-    double osc1level, osc2level;    // used in getOscParameters()
-    int octIdx;                     // used in getOscParameters()
+    int osc1Wave, osc2Wave;         // used in getOscParams()
+    double osc1level, osc2level;    // used in getOscParams()
+    int octIdx;                     // used in getOscParams()
+    float octShiftFreq[5] = { 0.25, 0.5, 1, 2, 4 }; // These are the values used to change OSC2 frequency in setOscType()
 
-    float octShiftFreq[5] = { 0.25, 0.5, 1, 2, 4 };
+    int filterTypeParam;                // used in getFilterParams()
+    float cutoffParam, resonanceParam;  // used in getFilterParams()
+    bool bypass;                        // used in getFilterParams()
     
     //juce::dsp::StateVariableTPTFilter<double> filter;
     maxiOsc osc1, osc2;
     maxiEnv env1;
-    
+    maxiFilter filter;
 };
