@@ -29,6 +29,10 @@ Filter::Filter(PipoSynth02AudioProcessor& p) : audioProcessor(p)
     cutoffSlider.setTextValueSuffix(" Hz");
     cutoffSlider.setNumDecimalPlacesToDisplay(0);
     addAndMakeVisible(&cutoffSlider);
+    cutoffLabel.setText("Freq", juce::dontSendNotification);
+    cutoffLabel.attachToComponent(&cutoffSlider, false);
+    cutoffLabel.setJustificationType(juce::Justification::centredTop);
+    addAndMakeVisible(&cutoffLabel);
 
     resonanceSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     resonanceSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 30, 20);
@@ -36,6 +40,10 @@ Filter::Filter(PipoSynth02AudioProcessor& p) : audioProcessor(p)
     resonanceSlider.setValue(0.707f);
     resonanceSlider.setNumDecimalPlacesToDisplay(2);
     addAndMakeVisible(&resonanceSlider);
+    resonanceLabel.setText("Q", juce::dontSendNotification);
+    resonanceLabel.attachToComponent(&resonanceSlider, false);
+    resonanceLabel.setJustificationType(juce::Justification::centredTop);
+    addAndMakeVisible(&resonanceLabel);
 
     bypassButton.setColour(juce::TextButton::buttonColourId, juce::Colours::red);
     bypassButton.setColour(juce::TextButton::buttonOnColourId, juce::Colours::green);
@@ -76,5 +84,5 @@ void Filter::resized()
     filterMenu.setBounds(area.removeFromTop(20));
     cutoffSlider.setBounds(30, 100, 70, 70);
     resonanceSlider.setBounds(100, 100, 70, 70);
-    bypassButton.setBounds(70, 20, 20, 20);
+    bypassButton.setBounds(90, 80, 30, 30);
 }

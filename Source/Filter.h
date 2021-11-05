@@ -29,6 +29,7 @@ private:
     juce::ComboBox filterMenu;
     juce::Slider cutoffSlider, resonanceSlider;
     juce::ToggleButton bypassButton;
+    juce::Label cutoffLabel, resonanceLabel;
 
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> filterChoice;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> cutoffAttachment, resonanceAttachment;

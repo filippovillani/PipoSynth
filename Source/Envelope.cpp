@@ -73,6 +73,19 @@ void Envelope::paint (juce::Graphics& g)
 
     g.setColour(juce::Colours::yellow);
     g.drawRoundedRectangle(25, 25, 150, 150, 20.f, 2.f);
+
+    // To fix in the future
+    g.setFont(20);
+    g.drawText("P", 180, 10,  30, 30, juce::Justification::centredTop);
+    g.drawText("i", 180, 30,  30, 30, juce::Justification::centredTop);
+    g.drawText("p", 180, 50,  30, 30, juce::Justification::centredTop);
+    g.drawText("o", 180, 70,  30, 30, juce::Justification::centredTop);
+    g.drawText("S", 180, 90,  30, 30, juce::Justification::centredTop);
+    g.drawText("y", 180, 110, 30, 30, juce::Justification::centredTop);
+    g.drawText("n", 180, 130, 30, 30, juce::Justification::centredTop);
+    g.drawText("t", 180, 150, 30, 30, juce::Justification::centredTop);
+    g.drawText("h", 180, 170, 30, 30, juce::Justification::centredTop);
+    
 }
 
 void Envelope::resized()
