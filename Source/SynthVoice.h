@@ -32,6 +32,8 @@ public:
     }
     // ===========================================
     double setOscType() {
+        osc1.sampleRate = getSampleRate();
+        osc2.sampleRate = getSampleRate();
         switch (osc1Wave) {
         case 0:
             sample1 = osc1.sinewave(frequency);
@@ -93,17 +95,18 @@ public:
     // ===========================================
 
     double setFilter() {
-        if (filterTypeParam == 0) {
-            filterPipo.sampleRate = getSampleRate();
-            return filterPipo.LPF2ord(setEnvelope(), cutoffParam, resonanceParam);
+        filter.sampleRate = getSampleRate();
+        
+        if (filterTypeParam == 0) {          
+            return filter.LPF2ord(setEnvelope(), cutoffParam, resonanceParam);
         }
 
         if (filterTypeParam == 1) {
-            return filterPipo.BPF2ord(setEnvelope(), cutoffParam, resonanceParam);
+            return filter.BPF2ord(setEnvelope(), cutoffParam, resonanceParam);
         }
 
         if (filterTypeParam == 2) {
-            return filterPipo.HPF2ord(setEnvelope(), cutoffParam, resonanceParam);
+            return filter.HPF2ord(setEnvelope(), cutoffParam, resonanceParam);
         }
     }
     // ===========================================
@@ -163,7 +166,6 @@ private:
 
     maxiOsc osc1, osc2;
     maxiEnv env1;
-    maxiFilter filter;
-    pipoFilter filterPipo;
+    pipoFilter filter;
     
 };
