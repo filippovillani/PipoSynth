@@ -3,7 +3,7 @@
 
     PipoFilters.h
     Created: 10 Nov 2021 4:29:20pm
-    Author:  User
+    Author:  Filippo Villani
 
   ==============================================================================
 */
@@ -35,8 +35,9 @@ public:
 
     double LPF1ord(double input, float cutoff);
     double HPF1ord(double input, float cutoff);
-    double LPF2ord(double input, float cutoff, float resonance);
-    double HPF2ord(double input, float cutoff, float resonance);
+    double LPF2ord(double input, float cutoff, float Q);
+    double HPF2ord(double input, float cutoff, float Q);
+    double BPF2ord(double input, float cutoff, float Q);
 
 
 private:
@@ -46,8 +47,8 @@ private:
     double output;
 
     float theta;
- 
-    float gamma;
+    double argtan;
+    float gamma, d, beta;
 
     float a0, a1, a2;
     float b1, b2;

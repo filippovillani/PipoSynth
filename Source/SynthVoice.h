@@ -95,15 +95,15 @@ public:
     double setFilter() {
         if (filterTypeParam == 0) {
             filterPipo.sampleRate = getSampleRate();
-            return filterPipo.LPF1ord(setEnvelope(), cutoffParam);
+            return filterPipo.LPF2ord(setEnvelope(), cutoffParam, resonanceParam);
         }
 
         if (filterTypeParam == 1) {
-            return filter.bandpass(setEnvelope(), cutoffParam, resonanceParam);
+            return filterPipo.BPF2ord(setEnvelope(), cutoffParam, resonanceParam);
         }
 
         if (filterTypeParam == 2) {
-            return filterPipo.HPF1ord(setEnvelope(), cutoffParam);
+            return filterPipo.HPF2ord(setEnvelope(), cutoffParam, resonanceParam);
         }
     }
     // ===========================================
