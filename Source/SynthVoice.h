@@ -12,6 +12,7 @@
 #include <JuceHeader.h>
 #include "SynthSound.h"
 #include "maximilian.h"
+#include "PipoFilters.h"
 
 class SynthVoice : public juce::SynthesiserVoice
 {
@@ -90,9 +91,11 @@ public:
         bypass = *onoff;
     }
     // ===========================================
+
     double setFilter() {
         if (filterTypeParam == 0) {
-            return filter.lores(setEnvelope(), cutoffParam, resonanceParam);
+            filterPipo.sampleRate = getSampleRate();
+            return filterPipo.LPF1ord(setEnvelope(), cutoffParam);
         }
 
         if (filterTypeParam == 1) {
@@ -100,7 +103,7 @@ public:
         }
 
         if (filterTypeParam == 2) {
-            return filter.hires(setEnvelope(), cutoffParam, resonanceParam);
+            return filterPipo.HPF1ord(setEnvelope(), cutoffParam);
         }
     }
     // ===========================================
@@ -161,4 +164,6 @@ private:
     maxiOsc osc1, osc2;
     maxiEnv env1;
     maxiFilter filter;
+    pipoFilter filterPipo;
+    
 };
